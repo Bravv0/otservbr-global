@@ -1,14 +1,20 @@
-local mType = Game.createMonsterType("Training Machine")
+local mType = Game.createMonsterType("Training Monk")
 local monster = {}
-monster.description = "Training Machine"
+monster.description = "a training monk"
 monster.experience = 0
 monster.outfit = {
-	lookType = 1142
+	lookType = 57,
+	lookHead = 0,
+	lookBody = 0,
+	lookLegs = 0,
+	lookFeet = 0,
+	lookAddons = 0,
+	lookMount = 0
 }
 
 monster.health = 1000000
 monster.maxHealth = monster.health
-monster.race = "energy"
+monster.race = "blood"
 monster.corpse = 0
 monster.speed = 0
 monster.maxSummons = 0
@@ -35,16 +41,8 @@ monster.summons = {
 
 monster.voices = {
 	interval = 5000,
-	chance = 10,
-	{text = "I hope you are enjoying your sparring Sir or Ma'am!", yell = false},
-	{text = "Threat level rising!", yell = false},
-	{text = "Engaging in hostile interaction!", yell = false},
-	{text = "Rrrtttarrrttarrrtta", yell = false},
-	{text = "Please feel free to hit me Sir or Ma'am!", yell = false},
-	{text = "klonk klonk klonk", yell = false},
-	{text = "Self-diagnosis running.", yell = false},
-	{text = "Battle simulation proceeding.", yell = false},
-	{text = "Repairs initiated!", yell = false}
+	chance = 5,
+	{text = "Training Weapons are more efficient!", yell = false}
 }
 
 monster.loot = {
@@ -65,33 +63,5 @@ monster.elements = {
 
 monster.immunities = {
 }
-
---[[
-mType.onThink = function(monster, interval)
-	print("I'm thinking")
-end
-
-mType.onAppear = function(monster, creature)
-	if monster:getId() == creature:getId() then
-		print(monster:getId(), creature:getId())
-	end
-end
-
-mType.onDisappear = function(monster, creature)
-	if monster:getId() == creature:getId() then
-		print(monster:getId(), creature:getId())
-	end
-end
-
-mType.onMove = function(monster, creature, fromPosition, toPosition)
-	if monster:getId() == creature:getId() then
-		print(monster:getId(), creature:getId(), fromPosition, toPosition)
-	end
-end
-
-mType.onSay = function(monster, creature, type, message)
-	print(monster:getId(), creature:getId(), type, message)
-end
-]]
 
 mType:register(monster)
