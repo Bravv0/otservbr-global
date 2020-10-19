@@ -1713,12 +1713,7 @@ void ProtocolGame::sendPreyData(PreySlotNum_t slot, PreyState_t slotState)
 
 	msg.addByte(slotState);
 	msg.addByte(0x00); // empty byte
-	if (clientVersion > 1250) {
-			msg.add<uint32_t>(0); // next free roll
-	}
-	else {
-		msg.add<uint16_t>(0);
-	}
+	msg.add<uint32_t>(0); // next free roll
 	msg.addByte(0x00); // wildCards
 
 	writeToOutputBuffer(msg);
