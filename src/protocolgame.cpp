@@ -2158,7 +2158,9 @@ void ProtocolGame::sendCoinBalance()
 
 	msg.add<uint32_t>(player->coinBalance); // Normal Coins
 	msg.add<uint32_t>(player->coinBalance); // Transferable Coins
-	msg.add<uint32_t>(player->coinBalance); // Reserved Auction Coins
+	if (clientVersion > 1250) {
+		msg.add<uint32_t>(player->coinBalance); // Reserved Auction Coins	
+	}
 	msg.add<uint32_t>(0); // Tournament Coins
 
 	writeToOutputBuffer(msg);
@@ -2641,7 +2643,10 @@ void ProtocolGame::sendCreatureSay(const Creature* creature, SpeakClasses type, 
 	msg.add<uint32_t>(++statementId);
 
 	msg.addString(creature->getName());
-  msg.addByte(0x00); // Show (Traded)
+	
+	if (clientVersion > 1250) {
+		msg.addByte(0x00); // Show (Traded)
+	}
 
 	//Add level only for players
 	if (const Player* speaker = creature->getPlayer()) {
@@ -2671,18 +2676,24 @@ void ProtocolGame::sendToChannel(const Creature* creature, SpeakClasses type, co
 	if (!creature) {
 		msg.add<uint32_t>(0x00);
     if (statementId != 0) {
-      msg.addByte(0x00); // Show (Traded)
+		if (clientVersion > 1250) {
+			msg.addByte(0x00); // Show (Traded)	 
+		}
     }
 	} else if (type == TALKTYPE_CHANNEL_R2) {
 		msg.add<uint32_t>(0x00);
     if (statementId != 0) {
-      msg.addByte(0x00); // Show (Traded)
+		if (clientVersion > 1250) {
+			msg.addByte(0x00); // Show (Traded)	 
+		}
     }
 		type = TALKTYPE_CHANNEL_R1;
 	} else {
 		msg.addString(creature->getName());
     if (statementId != 0) {
-      msg.addByte(0x00); // Show (Traded)
+		if (clientVersion > 1250) {
+			msg.addByte(0x00); // Show (Traded)	 
+		}
     }
 
 		//Add level only for players
@@ -2708,13 +2719,17 @@ void ProtocolGame::sendPrivateMessage(const Player* speaker, SpeakClasses type, 
 	if (speaker) {
 		msg.addString(speaker->getName());
     if (statementId != 0) {
-      msg.addByte(0x00); // Show (Traded)
+		if (clientVersion > 1250) {
+			msg.addByte(0x00); // Show (Traded)	 
+		}
     }
 		msg.add<uint16_t>(speaker->getLevel());
 	} else {
 		msg.add<uint32_t>(0x00);
     if (statementId != 0) {
-      msg.addByte(0x00); // Show (Traded)
+		if (clientVersion > 1250) {
+			msg.addByte(0x00); // Show (Traded)	 
+		}
     }
 	}
 	msg.addByte(type);
@@ -3261,7 +3276,9 @@ void ProtocolGame::sendTextWindow(uint32_t windowTextId, Item* item, uint16_t ma
 		msg.add<uint16_t>(0x00);
 	}
 
-  msg.addByte(0x00); // Show (Traded)
+	if (clientVersion > 1250) {
+		msg.addByte(0x00); // Show (Traded)	 
+	}
 
 	time_t writtenDate = item->getDate();
 	if (writtenDate != 0) {
@@ -3282,7 +3299,9 @@ void ProtocolGame::sendTextWindow(uint32_t windowTextId, uint32_t itemId, const 
 	msg.add<uint16_t>(text.size());
 	msg.addString(text);
 	msg.add<uint16_t>(0x00);
-  msg.addByte(0x00); // Show (Traded)
+	if (clientVersion > 1250) {
+		msg.addByte(0x00); // Show (Traded)	 
+	}
 	msg.add<uint16_t>(0x00);
 	writeToOutputBuffer(msg);
 }
