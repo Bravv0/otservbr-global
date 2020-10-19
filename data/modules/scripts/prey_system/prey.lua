@@ -595,10 +595,13 @@ function Player:sendPreyRerollPrice()
 	msg:addByte(Prey.Config.SelectWithWildCardPrice) -- select directly
 
 	-- Feature unavailable
-	msg:addU32(0)
-	msg:addU32(0)
-	msg:addByte(0)
-	msg:addByte(0)
+	local client = self:getClient()
+	if client.version > 1220 then
+	   msg:addU32(0)
+	   msg:addU32(0)
+	   msg:addByte(0)
+	   msg:addByte(0)
+	end
 
 	msg:sendToPlayer(self)
 end
