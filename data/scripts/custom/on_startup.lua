@@ -38,6 +38,7 @@ function checkServerSave()
 		print("Last server save was longer than 24h ago, looks like there wasn't no SS.")
 		updateGlobalStorage(DailyReward.storages.lastServerSave, nextSS)
 	end
+	print(os.date("%c", os.time()))
 end
 
 local customStartup = GlobalEvent("spawn trainers")
