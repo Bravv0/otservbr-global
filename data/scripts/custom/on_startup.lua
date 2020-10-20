@@ -32,6 +32,12 @@ function getTrainersPos()
 	return array
 end
 
+function checkServerSave()
+	if (Game.getLastServerSave() + 24*60*60) < os.time() then
+		print("Last server save was longer than 24h ago, looks like there wasn't no SS.")
+		updateGlobalStorage(DailyReward.storages.lastServerSave, (Game.getLastServerSave() + 24*60*60))
+	end
+end
 
 local customStartup = GlobalEvent("spawn trainers")
 function customStartup.onStartup()
@@ -40,7 +46,7 @@ function customStartup.onStartup()
 		print("> Spawned Training Monks.")
 	end, 5 * 1000)
 	
-	print(Game.getLastServerSave())
+	checkServerSave()
 end
 
 
